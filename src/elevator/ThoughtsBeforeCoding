@@ -1,0 +1,15 @@
+Elevator of a building
+
+1. Clarify:
+Keywords:
+    Elevator:
+        1. General properties help little to the design like materials of elevator
+        2. Type of elevator  ---->  lifter or elevator ？
+                             ---->  cargo elevator or customer elevator ?
+
+    Building:
+        1. General properties help little to the design like how large of this building or how many
+           layers of this building which does not change anything
+        2. When receiving a request of elevator, how many elevators should response?
+           like some are responsible for even layers and some are responsible for odd
+                some for higher layers and some for lower layers
