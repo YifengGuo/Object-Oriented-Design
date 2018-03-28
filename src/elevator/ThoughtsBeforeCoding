@@ -76,16 +76,98 @@ Keywords:
             -Can be pressed (to choose the level)
 
 4. Class diagram:
-    Access modifer:
+    Access modifier:
         public: +
         protected: #
         package: ~
         private: -
 
-    make the logic of the system more clear and make coding process easier
+        <<enum>>
 
+        <<interface>>
+
+        make the logic of the system more clear and make coding process easier
+
+
+5. Design details:
+
+    For method:
     If set result of methods as boolean, sometimes it is hard to know where the problem is,
-    instead, we can throw custom exception
+    instead, we can throw custom exception and for return type void is ok
+
+
+    Request: (base class)
+            # level
+            1. ExternalRequest  (up or down)
+                to handle external request, elevators should response it with certain priority:
+                    1.1 same direction > idle > reverse direction
+                    1.2 if all elevators are in reverse direction with external request
+                        then elevator closest to the request level will response
+            2. InternalRequest  ()
+
+    Elevator:   ---> List<ElevatorButton> buttons to set destination level
+        1. void handleExternalRequest(ExternalRequest r)
+        2. void handleInternalRequest(InternalRequest r)
+            to handle request:
+                    if elevator is at level 1 and moving up, then person1 press level 3 up and
+                    person2 press level 5 up, but here an external request elevator to go down
+                    to level 2.
+                    expected {3, 5, 2}
+                    one list or priority queue {2, 3, 5}
+
+            So to handle the requests, we better maintain two pq, one is for upStops and another for downStops
+                                    -------> need maintain two priorityqueue<Integer> upStops and downStops
+
+        3. boolean isRequestValid():    ---> need maintain currentLevel
+                                        ---> need InvalidRequestException
+            in our design:
+                    3.1 If elevator going up:
+                            requested level lower than current level
+                                invalid request
+
+                    3.2 If elevator going down:
+                            requested level higher than current level
+                                invalid request
+
+        4. openGate():
+            reach the next stop and open the gate
+
+        5. closeGate():
+            5.1 check if overweight
+                compare current weight with limit weight   ---> maintain limitWeight
+                                                           ---> need OverweightException
+
+            5.2 determine next movement:
+                5.2.1: check stops corresponding to current elevator status   ---> maintain Status
+                       e.g: elevator is going up, then check next stop in the upStops
+                            if upStops is empty, then check reverse stops (downStops),
+                            if downStops is not empty, change status to down, move to next stop
+                            else, change to idle
+
+
+        ElevatorButton:
+            pressButton(): will generate an internal request to corresponding elevator,
+            so it is necessary to maintain an Elevator reference in the ElevatorButton class
+            - level
+            - Elevator elevator
+            + InternalRequest pressButton()
+
+
+
+
+
+        <<enumeration>>
+        Direction:
+            UP
+            DOWN
+
+
+
+        <<enumeration>>
+        Status:
+            UP
+            DOWN
+            IDLE
 
 
 
