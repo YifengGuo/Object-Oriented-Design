@@ -6,6 +6,24 @@ Keywords:
         1. General properties help little to the design like materials of elevator
         2. Type of elevator  ---->  lifter or elevator ？
                              ---->  cargo elevator or customer elevator ?
+                                           ||
+                                           \/
+                                     cargo elevator and customer elevator
+                                     may have some differences (reachable layers, stoppable layers)
+
+
+
+    response priority:
+        When receiving a request, elevator with same direction will have priority to response, then
+        the static elevator, the last should be the elevators in the reverse direction
+
+    Response during motion: cannot move to the reverse direction
+                              ||
+                              \/
+            elevator should have at least 3 states: static, moving up and moving down
+                              ||
+                              \/
+                      should maintain current layer of elevator to decide if to response to the request or not
 
     Building:
         1. General properties help little to the design like how large of this building or how many
@@ -13,3 +31,61 @@ Keywords:
         2. When receiving a request of elevator, how many elevators should response?
            like some are responsible for even layers and some are responsible for odd
                 some for higher layers and some for lower layers
+
+
+
+
+    Passenger: do we need to consider passenger with a weight field?
+               or simpler, the elevator maintains total weight
+
+2. Core object:
+    basis idea: think one base object and then move forward linearly
+                         ElevatorSystem
+                               |
+                              \ /
+
+             Request   ---> ElevatorSystem   ---> Elevator
+                                                     |
+                                                    \ /
+                                                ElevatorButton
+
+                               ||
+                               \/
+                        think about mapping
+
+             Request                ElevatorSystem                                Elevator
+                               -List<Elevator> elevators                   -List<ElevatorButton>  buttons
+
+
+3. Use case: which functionality does the system need to supply
+    Example:
+        ElevatorSystem:
+            -Handle request
+
+        Request:
+            N/A
+
+        Elevator:
+            -Take external request
+            -Take internal request
+            -Open gate
+            -Close gate
+            -Check weight
+
+        ElevatorButton
+            -Can be pressed (to choose the level)
+
+4. Class diagram:
+    Access modifer:
+        public: +
+        protected: #
+        package: ~
+        private: -
+
+    make the logic of the system more clear and make coding process easier
+
+    If set result of methods as boolean, sometimes it is hard to know where the problem is,
+    instead, we can throw custom exception
+
+
+
