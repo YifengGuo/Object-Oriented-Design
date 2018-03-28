@@ -16,14 +16,15 @@ public class Elevator {
     private double currentWeight;
     int currentLevel;
     boolean isGateOpen;
+    private static final int BUILDING_LEVEL = 20;
 
     public Elevator() {
-        buttons = new ArrayList<>(20); // assume the building has 20 levels
-        for (int i = 1; i <= 20; i++) {
+        buttons = new ArrayList<>(BUILDING_LEVEL); // assume the building has 20 levels
+        for (int i = 1; i <= BUILDING_LEVEL; i++) {
             buttons.add(new ElevatorButton(this, i));
         }
-        upStops = new PriorityQueue<>(20);
-        downStops = new PriorityQueue<>(20);
+        upStops = new PriorityQueue<>(BUILDING_LEVEL);
+        downStops = new PriorityQueue<>(BUILDING_LEVEL);
         status = Status.IDLE; // idle by default
         limitWeight = 1000; // 1000kg
         currentWeight = 0;
