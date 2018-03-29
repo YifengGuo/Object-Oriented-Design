@@ -4,9 +4,13 @@ package management.parking_lot;
  * @author yifengguo
  */
 public class BusSpot extends Spot {
-    public BusSpot(int size, double hourlyRate, Level level) {
+    public BusSpot(Level l) {
+        super(l);
         this.size = VehicleType.BUS.getSize();
         this.hourlyRate = VehicleType.BUS.getHourlyRate();
-        this.level = level;
+    }
+
+    public String toString() {
+        return "BusSpot: " + this.size + " "+ this.hourlyRate +"\n";
     }
 }

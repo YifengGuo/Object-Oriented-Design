@@ -26,4 +26,9 @@ public class Ticket {
         this.spot = s;
         this.startTime = startTime;
     }
+
+    @Override
+    public String toString() {
+        return v + " " + spot;
+    }
 }

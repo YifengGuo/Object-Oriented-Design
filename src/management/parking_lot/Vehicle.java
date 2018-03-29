@@ -9,4 +9,9 @@ public abstract class Vehicle {
         this.size = size;
     }
     public abstract int getSize();
+
+    @Override
+    public String toString() {
+        return this.getClass().toString();
+    }
 }

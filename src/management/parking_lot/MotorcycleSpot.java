@@ -4,9 +4,13 @@ package management.parking_lot;
  * @author yifengguo
  */
 public class MotorcycleSpot extends Spot {
-    public MotorcycleSpot(int size, double hourlyRate, Level level) {
+    public MotorcycleSpot(Level l) {
+        super(l);
         this.size = VehicleType.MOTORCYCLE.getSize();
         this.hourlyRate = VehicleType.MOTORCYCLE.getHourlyRate();
-        this.level = level;
+    }
+
+    public String toString() {
+        return "MotorcycleSpot: " + this.size + " "+ this.hourlyRate +"\n";
     }
 }

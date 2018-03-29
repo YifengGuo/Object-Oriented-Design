@@ -17,12 +17,21 @@ public class ParkingLot {
         for (int i = 0; i < LEVEL_NUMBER; i++) {
             levels.add(new Level());
         }
-
     }
 
     public static ParkingLot getInstance() {
         return INSTANCE;
     }
+
+    public List<Level> getLevels() {
+        return this.levels;
+    }
+
+//    public void init() {
+//        for (int i = 0; i < LEVEL_NUMBER; i++) {
+//            levels.add(new Level());
+//        }
+//    }
 
     public int getAvailableCount() {
         int res = 0;
@@ -60,6 +69,8 @@ public class ParkingLot {
 
     public Ticket parkVehicle(Vehicle v) {
         Spot suitableSpot = findAvailableSpotForVehicle(v);
+        suitableSpot.takeSpot();
+        // suitableSpot.level.updateAvailableCount();
         long startTime = System.currentTimeMillis();
         Ticket res = new Ticket(v, suitableSpot, startTime);
         return res;

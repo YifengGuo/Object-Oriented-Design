@@ -6,17 +6,23 @@ package management.parking_lot;
 public abstract class Spot {
     protected int size;
     protected double hourlyRate;
-    protected boolean available;
+    protected boolean available = true;
     protected Level level;
 
+    public Spot(Level l) {
+        this.level = l;
+    }
+
     public boolean isAvailable() {
-        return this.available;
+        return this.available == true;
     }
     public void takeSpot() {
         this.available = false;
+        level.updateAvailableCount();
     }
     public void leaveSpot() {
         this.available = true;
+        level.updateAvailableCount();
     }
 
 }

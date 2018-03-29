@@ -1,5 +1,6 @@
 package management.parking_lot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,6 +9,31 @@ import java.util.List;
 public class Level {
     private List<Spot> spots;
     private int availableSpots;
+
+    private static final int DEFAULT_BUS_NUM = 10;
+    private static final int DEFAULT_CAR_NUM = 30;
+    private static final int DEFAULT_MOTORCYCLE_NUM = 10;
+
+    /**
+     * constructor of Level
+     * by default, we have 10 bus spots, 10 motorcycle spots and 30 car spots in each level
+     */
+    public Level() {
+        spots = new ArrayList<>();
+        for (int i = 0; i < DEFAULT_BUS_NUM; i ++) {
+            spots.add(new BusSpot(this));
+        }
+        for (int i = 0; i < DEFAULT_CAR_NUM; i++) {
+            spots.add(new CarSpot(this));
+        }
+        for (int i = 0; i < DEFAULT_MOTORCYCLE_NUM; i++) {
+            spots.add(new MotorcycleSpot(this));
+        }
+    }
+
+    public List<Spot> getSpots() {
+        return spots;
+    }
 
     public int getAvailableSpots() {
         return availableSpots;
@@ -35,9 +61,9 @@ public class Level {
         Spot res = null;
         Spot larger = null;
         for (Spot s : spots) {
-            if (s.size == v.getSize()) {
+            if (s.isAvailable() && s.size == v.getSize()) {
                 res = s;
-            } else if (s.size > v.getSize()) {
+            } else if (s.isAvailable() && s.size > v.getSize()) {
                 larger = s;
             }
         }
