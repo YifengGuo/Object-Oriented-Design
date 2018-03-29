@@ -32,6 +32,19 @@ public class Elevator {
         isGateOpen = false;
     }
 
+    public double getLimitWeight() {
+        return limitWeight;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public boolean isGateOpen() {
+        return isGateOpen;
+    }
+
+
     public void handleInternalRequest(InternalRequest r) {
         if (!isRequestValid(r)) {
             try {
@@ -91,9 +104,9 @@ public class Elevator {
     public void openGate() {
         isGateOpen = true;
         if (this.status == Status.UP) {
-            this.upStops.poll();
+            this.currentLevel = this.upStops.poll();
         } else {
-            this.downStops.poll();
+            this.currentLevel = this.downStops.poll();
         }
         // passengers reaching destination get off
         // passengers at this level go on
