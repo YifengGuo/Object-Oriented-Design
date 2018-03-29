@@ -1,0 +1,76 @@
+when facing with designing:
+    parking lot
+    gym
+    restaurant
+    library
+    supermarket
+    ...
+
+Assume we are the manager of it and think about how to design it
+
+
+1. Clarify:
+    what to manage in parking lot?
+        parking spots
+        vehicle
+
+    ParkingLot:
+            which kind of parking lot?
+                1. open air
+                2. parking building
+
+    Vehicle:
+        which kind of vehicle?  ask for confirmation
+            1. Bus
+            2. Car
+            3. Motorcycle
+
+    ParkingSpot:
+        1. Large
+        2. Compact
+        3. Small
+
+
+    rule: 1 car 1 spot
+          Parking lot can show available spot counts
+          pay by parking time
+
+
+2. Core object:
+
+    input   --->  parking lot --->    output    (thinking from manager or the system itself)
+     vehicle                        suitable parking spot
+
+
+    Start to think about mapping between core objects:
+
+    ParkingLot:
+        - List<Level> levels
+
+    Level:
+        -List<Spot> level
+
+    Vehicle:
+        1. Bus
+        2. Car
+        3. Motorcycle
+
+    ParkingSpot:
+
+3. Use case: consider from a manager:
+    1. Reserve (reverse a parking lot for a vehicle)
+    2. Serve (put the car on a match place)
+    3. Checkout (let the car leave and pay the bill)
+
+    Vehicle (Bus/Car/Motorcycle):
+
+
+    ParkingLot:
+        1. Park vehicle
+        2. Get available spot counts
+        3. Clear spot
+        4. Calculate price
+
+
+Singleton:
+    better set the ParkingLot as a Singleton
