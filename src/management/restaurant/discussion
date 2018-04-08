@@ -1,0 +1,36 @@
+Restaurant:
+    input  --->          Restaurant   --->      Output
+
+  a group of people                              table
+
+
+We could also discuss:
+                     input and output pair:
+                        order   --->    dishes
+                     order type:
+                        delivery, pick-ups, dine-in...
+
+
+Table type:
+    Bar
+    normal table     ======>    type will affect max number of people, price
+    private room
+
+
+Here we simply first consider normal table (no reservation, no dine-out)
+
+We better consider the design from the system-side
+So we had better do not consider to much on person!!
+
+Compare:
+        List<Guest>
+        Party
+    first choice would invoke class Guest, and would need a Party class which holds List<Guest>
+
+    So basically, we better consider the design from object oriented way without considering too much details
+
+    Party --->  Restaurant   ---> Table
+
+    Party ---> orderDish()  Restaurant ---> return a table of dishes
+
+    Party ---> pay()        Restaurant ---> clearTable()
