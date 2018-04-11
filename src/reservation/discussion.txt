@@ -1,0 +1,58 @@
+Reservation:
+
+1. What: what to reserve:
+
+    for example:
+        book a flight   ---> reserve a flight ticket   ---> consider ticket properties
+
+
+
+2. Use case:
+
+    - search
+
+    - select   (select seat for a flight, select time slot for a restaurant ...)
+
+    - cancel
+
+
+3. A basic general framework of reservation problem:
+
+
+    input      ------->        reservation system         ------>       output
+
+
+    Search Criteria   ----> search()  ---->  List<Result>  -----> select()   ----> Receipt
+                                                  |
+                                                  |
+                                                 \ /
+                                   if price or core property of result
+                                   is the same, we can ignore the list
+                                   and return the result directly
+
+                                   else, cannot ignore (first class, economy class ticket)
+
+
+Usually use map to maintain a object's reservation info
+    example:
+        Map<Table, List<TimeSlot>> map
+        Map<Room, List<Date>> map
+
+        and when new request comes, go through each object in this system
+        and check the list of current obj and to see if it can receive
+        new request given the new request's date or time slot
+
+        - boolean isRequestAvailable(Request r, List<Date> dates)
+
+
+Hotel reservation:
+    1. first to determine which type:
+        - search and select room from current hotel
+        - search and select from multiple hotels
+
+
+    2. List<Result>  usually return List<RoomType> not Room!!!
+      + Map<RoomType, Integer> handleSearchRequest(Request r)
+
+
+    3. use cache to store internal info
