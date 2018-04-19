@@ -110,7 +110,11 @@ public class Hotel {
             // still put current search and its result into cache for future use
             if (roomCount > rooms.size()) {
                 cache.put(search, availableRooms);
-                return null;
+                try {
+                    throw new RoomNotEnoughException("The rooms for current type is not enough!");
+                } catch (RoomNotEnoughException e) {
+                    e.printStackTrace();
+                }
             }
 
             // if rooms are enough
