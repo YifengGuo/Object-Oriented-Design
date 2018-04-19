@@ -13,9 +13,20 @@ public class Hotel {
     // private Map<Room, List<Date>> roomReservations; // each room itself maintains the reservation time info
     private LRUCache cache;
 
+    private static final int DEFAULT_SINGLE_ROOM_COUNT = 20; // set default single room count of a hotel with 20
+    private static final int DEFAULT_DOUBLE_ROOM_COUNT = 10; // set default double room count of a hotel with 10
+
     public Hotel(int id) {
         this.id = id;
         rooms = new ArrayList<>();
+        // add 20 single rooms and 10 double rooms for a hotel by default
+        for (int i = 0; i < DEFAULT_SINGLE_ROOM_COUNT; i++) {
+            rooms.add(new Room(i, RoomType.SINGLE));
+        }
+
+        for (int i = DEFAULT_SINGLE_ROOM_COUNT; i < DEFAULT_DOUBLE_ROOM_COUNT + DEFAULT_SINGLE_ROOM_COUNT; i++) {
+            rooms.add(new Room(i, RoomType.DOUBLE));
+        }
         cache = new LRUCache(2);
     }
 
