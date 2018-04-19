@@ -1,12 +1,25 @@
 package reservation.main;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by guoyifeng on 4/18/18.
+ * Created by guoyifeng on 4/18/18.<br>
+ *
+ * This LRUCache is to store mapping info between
+ * SearchRequest and Map<RoomType, List<Room>>
+ * Because when send SearchRequest to Hotel, Hotel will go through all the rooms to
+ * check its availability. However, when making Reservation, to confirm Reservation,
+ * Hotel will go through all the rooms again to check each room's availability if without
+ * this LRUCache.<br>
+ *
+ * This LRUCache caches the available rooms' info of current SearchRequest, with this
+ * LRUCache, Reservation making will be more efficient<br>
+ *
+ * The practice for this LRUCache in real life is that search frequency is much higher
+ * than Reservation's
+ *
  */
 public class LRUCache extends LinkedHashMap<SearchRequest, Map<RoomType, List<Room>>> {
     private static final long serialVersionUID = 1L;
@@ -34,13 +47,13 @@ public class LRUCache extends LinkedHashMap<SearchRequest, Map<RoomType, List<Ro
         return res;
     }
 
-    public String printCache() {
+    @Override
+    public String toString() {
         String res = "";
-
         for (Map.Entry<SearchRequest, Map<RoomType, List<Room>>> entry : super.entrySet()) {
             res += ("Request -> " + entry.getKey().toString()+ "\n");
             res += ("Corresponding Rooms -> " + printAllAvailableRooms(entry.getValue()) + "\n");
-            res += "\n"
+            res += "\n";
         }
         return res;
     }
