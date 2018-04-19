@@ -26,6 +26,12 @@ public class ReservationRequest {
         roomsNeeded = new HashMap<>();
     }
 
+    public ReservationRequest(Date startDate, Date endDate, Map<RoomType, Integer> roomsNeeded) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.roomsNeeded = roomsNeeded;
+    }
+
     public Date getStartDate() {
         return startDate;
     }

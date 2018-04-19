@@ -70,7 +70,7 @@ public class Hotel {
      * @param r
      * @return
      */
-    public Map<RoomType, List<Room>> handleSearchRequst(SearchRequest r) {
+    public Map<RoomType, List<Room>> handleSearchRequest(SearchRequest r) {
         if (cache.containsKey(r)) {
             return cache.get(r);
         }
@@ -144,5 +144,10 @@ public class Hotel {
         for (Room room : reservation.getRooms()) {
             room.cancelReservation(reservation.getStartDate(), reservation.getEndDate());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "hotel" + this.id;
     }
 }

@@ -43,7 +43,7 @@ public class BookingSystem {
         List<Hotel> res = new ArrayList<>();
 
         for (Hotel hotel : this.getHotels()) {
-            Map<RoomType, List<Room>> availableRooms = hotel.handleSearchRequst(searchRequest);
+            Map<RoomType, List<Room>> availableRooms = hotel.handleSearchRequest(searchRequest);
             int availableCapacity = 0;
             // traverse on each hotel to see if it can hold this group of people with
             // its available rooms
@@ -54,6 +54,14 @@ public class BookingSystem {
 
             if (availableCapacity >= groupSize) {
                 res.add(hotel);
+            }
+        }
+
+        if (res.size() == 0) {
+            try {
+                throw new NoHotelFoundException("No suitable hotel found!");
+            } catch (NoHotelFoundException e) {
+                e.printStackTrace();
             }
         }
         return res;
