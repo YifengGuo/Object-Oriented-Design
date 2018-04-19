@@ -117,7 +117,7 @@ Use cases:
                         the Reservation and return it
 
                 ***** So to avoid this redundant work, we can invoke a cache here  *****
-                Store the availability map Map<SearchRequest, Map<RoomType, List<Date>>> in the cache and once checking
+                Store the availability map Map<SearchRequest, Map<RoomType, List<Room>>> in the cache and once checking
                 the rooms availability during making reservation process, just check the cache
 
                 We could use LRU cache here!
