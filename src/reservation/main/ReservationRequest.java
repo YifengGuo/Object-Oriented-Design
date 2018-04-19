@@ -17,6 +17,7 @@ import java.util.Map;
 public class ReservationRequest {
     private Date startDate;
     private Date endDate;
+    // needed room type and its corresponding count
     private Map<RoomType, Integer> roomsNeeded;
 
     public ReservationRequest(Date startDate, Date endDate) {
