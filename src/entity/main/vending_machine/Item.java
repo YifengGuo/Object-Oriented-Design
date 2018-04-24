@@ -10,8 +10,12 @@ package entity.main.vending_machine;
  * by the vending machine so we need to abstract super
  * class for this part
  */
-public abstract class Item {
+public class Item {
     protected ItemInfo info;
+
+    public Item() {
+        this.info = info;
+    }
 
     public ItemInfo getInfo() {
         return this.info;
