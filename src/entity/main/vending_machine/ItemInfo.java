@@ -14,8 +14,18 @@ package entity.main.vending_machine;
  */
 public class ItemInfo {
     private float price;
+    private String itemName;
+
+    public ItemInfo(String itemName, float price) {
+        this.itemName = itemName;
+        this.price = price;
+    }
 
     public float getPrice() {
         return this.price;
+    }
+
+    public String getItemName() {
+        return itemName;
     }
 }
