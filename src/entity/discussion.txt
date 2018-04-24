@@ -1,0 +1,79 @@
+Entity:
+    For a entity, consider the input and output of this entity
+
+    eg: for a coffee maker: coffee bean ---> coffee maker ---> coffee
+
+Three Design Pattern:
+    1. State Design Pattern
+    2. Decorator Design Pattern
+    3. Factory Design Pattern
+
+
+
+Example:
+    Vending Machine:
+        input and output:
+            input: Coin (money)   for this case, only consider coin as input(or use Strategy Design Pattern
+                                                                             for multiple payment methods)
+            output: Item
+
+    What need to clarify:
+        1. The size of vending machine     No Limit for this design
+        2. The kinds of selling items      Only Coke, Sprite and MountainDew
+        3. What if one kind of items sold out (refill strategy)
+        4. Payment                         Only accept coins for this design
+                                           Need to consider change
+
+    How:
+        1. How to select an item?   by inputting item code or pressing button?
+                                   input item code for this design
+
+
+    Who/When: N/A
+
+
+    Core Object:
+        1. VendingMachine
+            List<Coin> coins  (for change)
+            List<Item> items
+
+        2. Items
+                    Item
+                   /  |  \
+                 concrete items
+
+        3. Coins
+            - type <<enum>>
+
+    Use Cases:
+        1. select items
+            vending machine takes an external selection (item code), then shows the price of that item
+        2. insert coins
+            take a list of coins
+        3. execute transaction
+            return selected items
+            return change
+            details:
+                - get the selected item
+                - compare item's price with inserted coins
+                - if not enough, throws exception
+                - else return the item and update vending machine's list of coins
+                - return change if needed
+
+            What if same item be selected: throw exception
+            What if none of items be selected: throw exception
+
+                                     \|||/
+            There may be a lot of cases which may need some strategy to handle (too many if else ....)
+                                       |
+                                      \ /
+                               State Design Pattern
+                             When change of state will affect the entity itself, we could
+                             use State Design Pattern
+                       Each concrete state which implements the State interface should implement
+                       all the functions under this state
+                       And when state change, we need a setState() function to change the current state
+                       of entity (vending machine)
+        4. cancel transaction
+            return all the inserted coins
+        5. refill item
