@@ -7,7 +7,7 @@ public class Pepsi extends Item {
     private ItemInfo pepsiInfo;
 
     public Pepsi() {
-        this.pepsiInfo = new ItemInfo("Pepsi", 1.69f);
+        this.pepsiInfo = new ItemInfo("Pepsi", 169f);
     }
 
     public ItemInfo getInfo() {

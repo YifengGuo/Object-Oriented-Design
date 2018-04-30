@@ -85,7 +85,7 @@ public class VendingMachine {
      * @return
      */
     public List<Coin> calculateChange(float change) {
-        if (change == 0.0f) {
+        if (change == 0.0) {
             return new ArrayList<>();
         }
         int penny_left = 0;
@@ -107,8 +107,8 @@ public class VendingMachine {
 
         int coins[] = new int[]{1, 5, 10, 25};
         List<Integer> plan = new ArrayList<>();
-        List<List<Integer>> allCombos = helper(change, coins, penny_left, nickle_left, dime_left, quarter_left,
-                plan, 0);
+        List<List<Integer>> allCombos = new ArrayList<>();
+        helper(change, coins, penny_left, nickle_left, dime_left, quarter_left, plan, 0, allCombos);
         if (allCombos.size() == 0) {
             try {
                 throw new NotEnoughCoinsException("Not Enough Coins Left");
@@ -135,9 +135,19 @@ public class VendingMachine {
     }
 
     // run dfs
-    private List<List<Integer>> helper(float target, int[] coins, int penny_left, int nickle_left,
-                                 int dime_left, int quarter_left, List<Integer> plan, int level) {
+    private void helper(float target, int[] coins, int penny_left, int nickle_left, int dime_left,
+                                       int quarter_left, List<Integer> plan, int level, List<List<Integer>> res) {
         // base case
-
+        if (level == coins.length - 1) {
+            if (target % coins[level] == 0) {
+                plan.add((int)target / coins[level]);
+                if (plan.get(0) <= penny_left && plan.get(1) <= nickle_left &&
+                        plan.get(2) <= dime_left && plan.get(3) <= quarter_left) {
+                    res.add(new ArrayList<>(plan));
+                }
+                plan.remove(plan.size() - 1);
+            }
+            return;
+        }
     }
 }

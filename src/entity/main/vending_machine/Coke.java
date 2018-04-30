@@ -7,7 +7,7 @@ public class Coke extends Item {
     private ItemInfo cokeInfo;
 
     public Coke() {
-        cokeInfo = new ItemInfo("Coke", 1.99f);
+        cokeInfo = new ItemInfo("Coke", 199f);
     }
 
     public ItemInfo getCokeInfo() {

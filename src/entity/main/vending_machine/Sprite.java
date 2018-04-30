@@ -7,7 +7,7 @@ public class Sprite extends Item {
     private ItemInfo spriteInfo;
 
     public Sprite() {
-        this.spriteInfo = new ItemInfo("Sprite", 1.59f);
+        this.spriteInfo = new ItemInfo("Sprite", 159f);
     }
 
     public ItemInfo getSpriteInfo() {
