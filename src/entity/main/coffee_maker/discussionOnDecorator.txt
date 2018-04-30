@@ -1,0 +1,13 @@
+Decorator Design Pattern:
+    Decorator pattern allows a user to add new functionality to an existing
+    object without altering its structure. This type of design pattern comes
+    under structural pattern as this pattern acts as a wrapper to existing
+    class.
+
+If we do not use decorator to the CoffeeMaker, we would have a very deep
+inheritance tree from coffee to decaf to decafWithMilk...
+And milk, mocha and soy are not kind of coffee but we may want to add them
+into coffee
+
+Consider base class as canvas, decorator is to add something into this
+canvas layer by layer
