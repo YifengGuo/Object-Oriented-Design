@@ -16,4 +16,12 @@ public abstract class CoffeeDecorator extends Coffee {
 
     public abstract double getPrice();
     public abstract String getDescription();
+
+    public CoffeeDecorator() {
+
+    }
+
+    public CoffeeDecorator(Coffee coffee) {
+        this.coffee = coffee;
+    }
 }

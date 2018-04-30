@@ -8,17 +8,18 @@ package entity.main.coffee_maker;
  * A kind of add-on (decorator) for Coffee
  */
 public class Milk extends CoffeeDecorator {
-    public Milk() {
+    public Milk(Coffee coffee) {
+        this.coffee = coffee;
         this.price = 0.5;
     }
 
     @Override
     public double getPrice() {
-        return this.price;
+        return this.price + coffee.getPrice();
     }
 
     @Override
     public String getDescription() {
-        return "Milk";
+        return coffee.getDescription() + ", Milk";
     }
 }

@@ -9,17 +9,18 @@ package entity.main.coffee_maker;
  */
 public class Mocha extends CoffeeDecorator {
 
-    public Mocha() {
+    public Mocha(Coffee coffee) {
+        this.coffee = coffee;
         this.price = 1.00;
     }
 
     @Override
     public double getPrice() {
-        return this.price;
+        return this.price + coffee.getPrice();
     }
 
     @Override
     public String getDescription() {
-        return "Mocha";
+        return coffee.getDescription() + ", Mocha";
     }
 }
