@@ -1,0 +1,36 @@
+1. Specialities of Games:
+    1. Players
+        Consider do we need to design class Player deliberately?
+
+    2. Rules
+
+
+    3. Win or lose
+
+
+    4. Scores or chips
+
+All of 4 points need clarifying before further discussion with interviewer
+
+2. Terminologies:
+    Board
+    Suit: Heart, Diamond, Spade, Club
+    Hand: cards in hand
+
+3. State of the Board:  fetch use cases from the states
+    3.1 Initialization
+        shuffle
+        lay the board
+        ...
+
+    3.2 Play
+        move the chessman
+        play the card
+        ...
+
+    3.3 Win or lose check
+
+Based on the State of Board design the use cases  (In this case we no longer based on core object to design use cases)
+
+
+
