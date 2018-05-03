@@ -1,0 +1,9 @@
+How to determine a game is a draw?
+    Solution1: Both players submit a request for draw
+
+    Solution2: count the duplicate steps and if it reaches the limit, call a draw
+
+    Solution3: record the total count of steps, if total steps reach the MAX_STEPS, call a draw
+
+        Solution 3 is better because Solution1 needs detailed design on class Player
+                                     Solution2 needs to remember too much info in the past
