@@ -3,11 +3,17 @@ package game.main.black_jack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+@SuppressWarnings("Duplicates")
 public class Deck {
 	private Dealer dealer;
 	private List<Card> cards;
 	private List<Player> players;
+
+	public static final int BLAST_FLAG = -1;
+
+	private static final int MAX_PLAYER_NUMBER = 5;
 
 	public Dealer getDealer() {
 		return this.dealer;
@@ -21,15 +27,50 @@ public class Deck {
 		return this.players;
 	}
 
+	// constructor
+	public Deck() {
+	    dealer = new Dealer(this);
+	    cards = new ArrayList<>();
+	    createCards(cards);
+	    shuffle(cards);
+	    players = new ArrayList<>(5);
+    }
+
+    private void createCards(List<Card> cards) {
+	    for (Suit suit : Suit.values()) {
+	        for (CardValue cardValue : CardValue.values()) {
+	            cards.add(new Card(suit, cardValue));
+            }
+        }
+    }
+
+    public void printCardsOnDeck() {
+	    for (Card card : cards) {
+            System.out.println(card.getSuit() + " " + card.getCardValue());
+        }
+    }
+
 	/**
 	 * Apply shuffle algorithm to perfectly
 	 * shuffle the cards
 	 */
-	public void shuffle() {
-
+	public void shuffle(List<Card> cards) {
+        for (int i = cards.size(); i >= 1; i--) {
+            int index = (int) (Math.random() * i);
+            swap(cards, index, i - 1);
+        }
 	}
 
-	public void addPlayer(Player player) {
+	private void swap(List<Card> cards, int a, int b) {
+	    Card tmp = cards.get(a);
+	    cards.set(a, cards.get(b));
+	    cards.set(b, tmp);
+    }
+
+	public void addPlayer(Player player) throws MaxPlayerNumberException {
+	    if (players.size() == MAX_PLAYER_NUMBER) {
+	        throw new MaxPlayerNumberException("The deck is full, please change another deck to play.");
+        }
 		this.players.add(player);
 	}
 
@@ -80,7 +121,7 @@ public class Deck {
 	 */
 	public int calculateHandValue(Hand hand) {
 		int res = 0;
-		int max = Integer.MIN_VALUE;
+		int max = BLAST_FLAG;
 		for (Card card : hand.getCards()) {
 			if (card.getCardValue() != CardValue.ACE) {
 				res += card.getCardValue().getValue();
@@ -89,11 +130,11 @@ public class Deck {
 		List<Card> aces =  findAllAces(hand);
 		List<Integer> dedup = new ArrayList<>();
 		if (aces.size() == 0) {
-			return res;
+			return res <= 21 ? res : BLAST_FLAG;
 		} else { // run dfs to find all possible value result
             List<Integer> allPossibleValues = new ArrayList<>();
             dfs(allPossibleValues, aces, res, 0, 0);
-            for (Integer i : allPossibleValues) {
+            for (Integer i : allPossibleValues) { // de-duplicate
                 if (!dedup.contains(i)) {
                     dedup.add(i);
                 }
@@ -101,8 +142,8 @@ public class Deck {
 		}
 		// TODO: RETURN MAX VALUE WHICH LESS THAN OR EQUAL 21 IF POSSIBLE
         for (Integer i : dedup) {
-		    if (res + i > max && res + i <= 21) {
-		        max = res + i;
+		    if (i > max && i <= 21) {
+		        max = i;
             }
         }
         return max;
@@ -121,11 +162,12 @@ public class Deck {
         res += one;
         dfs(allPossibleValues, aces, res, level + 1, one);
 
-        res -= lastLevelAddition;
+        res -= one;
         // add 11
         int eleven = aces.get(level).getCardValue().getValue2();
         res += eleven;
         dfs(allPossibleValues, aces, res, level + 1, eleven);
+		res -= eleven;
     }
 
 	private List<Card> findAllAces(Hand hand) {
@@ -137,4 +179,75 @@ public class Deck {
 		}
 		return res;
 	}
+
+	public void playGame() {
+	    for (Player player : players) {
+	        serveOnePlayer(player);
+        }
+        serveDealer(dealer);
+        compareResults();
+        printResults();
+    }
+
+    private void serveOnePlayer(Player player) {
+        System.out.println("current player's hand cards are ");
+        player.getHand().printHand();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please input the amount of bets for this game: ");
+        int amount = scanner.nextInt();
+        player.placeBets(amount);
+        while (!player.isStopDealing()) {
+            System.out.println("current player's hand cards are ");
+            player.getHand().printHand();
+            System.out.println("Do you want to deal one more card?");
+            String msg = scanner.next();
+            if (msg.equals("Yes")) {
+                player.dealNextCard();
+                int value = this.calculateHandValue(player.getHand());
+                if (value == BLAST_FLAG) {
+                    System.out.println("You have blasted!!!");
+                    return;
+                }
+            } else if (msg.equals("No")) {
+                player.stopDealing();
+            } else {
+                System.out.println("Please insert Yes or No.");
+            }
+        }
+    }
+
+    private void serveDealer(Dealer dealer) {
+        Scanner scanner = new Scanner(System.in);
+        while (!dealer.isStopDealing()) {
+            System.out.println("current dealer's hand cards are ");
+            dealer.getHand().printHand();
+            System.out.println("Do you want to deal one more card?");
+            if (this.calculateHandValue(dealer.getHand()) <= 17) {
+                dealer.dealNextCard();
+                continue;
+            }
+            // if dealer's hand > 17, he can choose whether or not to deal next card
+            String msg = scanner.next();
+            if (msg.equals("Yes")) {
+                dealer.dealNextCard();
+                int value = this.calculateHandValue(dealer.getHand());
+                if (value == BLAST_FLAG) {
+                    System.out.println("You have blasted!!!");
+                    return;
+                }
+            } else if (msg.equals("No")) {
+                dealer.stopDealing();
+            } else {
+                System.out.println("Please insert Yes or No.");
+            }
+        }
+    }
+
+    public void printResults() {
+	    System.out.println("After one game, each player and dealer's bets are: ");
+	    for (Player player : players) {
+	        System.out.println(player.getTotalBets());
+        }
+        System.out.println("Dealer's bets are: " + dealer.getBets());
+    }
 }
