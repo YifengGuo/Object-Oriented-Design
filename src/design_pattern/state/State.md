@@ -24,7 +24,7 @@ Example of State:
 ```
 In the Vending Machine:
 ```
-    1. We have an Interface State to claify all the necessary
+    1. We have an Interface State to clarify all the necessary
        functions (use cases) for the system
        
     2. An abstract class AbstractState as super class for all
