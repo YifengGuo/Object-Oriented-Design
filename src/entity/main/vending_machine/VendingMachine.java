@@ -54,6 +54,17 @@ public class VendingMachine {
     private InsertedCoinsState insertedCoinsState;
 
 
+    public VendingMachine() {
+        currentInsertedCoins = new ArrayList<>();
+        currentSelectedItem = null;
+
+        stock = new Stock();
+        noSelectionState = new NoSelectionState(this);
+        hasSelectionState = new HasSelectionState(this);
+        insertedCoinsState = new InsertedCoinsState(this);
+        state = noSelectionState; // initial state
+    }
+
 
 
 
