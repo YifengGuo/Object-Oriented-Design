@@ -7,4 +7,4 @@ different and proper strategies as we like. State of system will
 change immediately when some action has been taken like inserting
 a coin into a Vending Machine
 
-![state design pattern](/Users/guoyifeng/Documents/myJava/Object-Oriented-Design/src/design_pattern/state/state.png)
+![state design pattern](https://github.com/YifengGuo/Object-Oriented-Design/blob/master/src/design_pattern/state/state.png?raw=true)
